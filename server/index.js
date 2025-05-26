@@ -2,7 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');   
-const authRoutes = require('./routes/auth'); // Import auth routes
+const userRoutes = require('./routes/user'); // Import user routes
 dotenv.config();
 
 
@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // use the auth routes
-app.use('/api/auth', authRoutes); 
+app.use('/api/user', userRoutes); // Use user routes under /api/user
 
 
 app.get('/', (req, res) => {
