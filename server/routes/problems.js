@@ -5,8 +5,6 @@ const { authenticateToken, authorizeAdmin } = require('../middlewares/auth'); //
 const router = express.Router();
 // Create a new problem
 router.post('/', authenticateToken, authorizeAdmin, async (req, res) => {
-    // console.log('Request Body:', req.body); 
-
     const { title, description, difficulty, tags } = req.body;
 
     // Optional: if tags is string, convert to array
