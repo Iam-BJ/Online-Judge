@@ -2,14 +2,14 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const authenticateToken = require('../middlewares/auth'); // Import authentication middleware
+const { authenticateToken } = require('../middlewares/auth'); // Import authentication middleware
 
 const router = express.Router();
 
 // Register route
 router.post('/register', async (req, res) => {
     const { firstName, lastName, email, password } = req.body;
-
+     console.log('Request body:', req.body);
     try {
         // Check if user already exists
         const existingUser = await User.findOne({ email });
@@ -53,7 +53,7 @@ router.post('/login', async (req, res) => {
 
         // Create a JWT token
         const token = jwt.sign(
-            { userId: user._id },
+            { userId: user._id , isAdmin: user.isAdmin },
             process.env.JWT_SECRET,
             { expiresIn: '1h' }
         );
@@ -65,7 +65,8 @@ router.post('/login', async (req, res) => {
                 id: user._id,
                 firstName: user.firstName,
                 lastName: user.lastName,
-                email: user.email
+                email: user.email,
+                isAdmin: user.isAdmin
             }
         });
     } catch (error) {

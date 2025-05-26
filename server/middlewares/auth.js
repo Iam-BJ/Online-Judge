@@ -16,4 +16,16 @@ function authenticateToken(req, res, next) {
         next(); // Proceed to the next middleware or route handler
     });
 }
-module.exports = authenticateToken;
+//middleware to authorize admin users
+function authorizeAdmin(req, res, next) {
+    if (req.user && req.user.isAdmin) {
+        next(); // User is admin, proceed to the next middleware or route handler
+    } else {
+        res.status(403).json({ message: 'Access denied. Admins only.' });
+    }
+}   
+//export the middlewares
+module.exports = {
+    authenticateToken,
+    authorizeAdmin
+};
