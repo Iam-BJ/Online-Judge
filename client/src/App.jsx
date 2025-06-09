@@ -5,45 +5,43 @@ import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import ProblemsList from './components/ProblemsList';
 import AddProblem from './components/AddProblem';
+import EditProblem from './components/EditProblem';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminRoute from './components/AdminRoute';
-import EditProblem from './components/EditProblem';
+import Layout from './components/Layout';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Register />} />
-        <Route path="/register" element={<Register />} />
+        {/* Public Routes */}
+        <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
+        {/* Protected Layout Routes (Navbar + Footer included) */}
         <Route
-          path="/dashboard"
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <Layout />
             </ProtectedRoute>
           }
-        />
+        >
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/problems" element={<ProblemsList />} />
+          <Route path="/edit-problem/:id" element={<EditProblem />} />
+        </Route>
 
-        <Route
-          path="/problems"
-          element={
-            <ProtectedRoute>
-              <ProblemsList />
-            </ProtectedRoute>
-          }
-        />
-
+        {/* Admin-Only Route (still inside layout) */}
         <Route
           path="/problems/add"
           element={
             <AdminRoute>
+              <Layout />
               <AddProblem />
             </AdminRoute>
           }
         />
-        <Route path="/edit-problem/:id" element={<ProtectedRoute><EditProblem /></ProtectedRoute>} />
       </Routes>
     </Router>
   );
