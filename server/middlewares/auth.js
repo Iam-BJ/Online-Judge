@@ -13,6 +13,8 @@ function authenticateToken(req, res, next) {
             return res.status(403).json({ message: 'Invalid token' });
         }
         req.user = user; // Attach user info to request object
+        // console.log('Decoded JWT:', user);
+
         next(); // Proceed to the next middleware or route handler
     });
 }
