@@ -9,6 +9,8 @@ import EditProblem from './components/EditProblem';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminRoute from './components/AdminRoute';
 import Layout from './components/Layout';
+import MySubmissions from './components/MySubmissions';
+import CompilerPage from './components/CompilerPage'; // ✅ Add this line
 
 function App() {
   return (
@@ -30,18 +32,27 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/problems" element={<ProblemsList />} />
           <Route path="/edit-problem/:id" element={<EditProblem />} />
+          <Route path="/submissions" element={<MySubmissions />} />
+          <Route path="/solve/:id" element={<CompilerPage />} /> {/* ✅ Solve route */}
         </Route>
 
-        {/* Admin-Only Route (still inside layout) */}
+        {/* Admin-Only Route inside Protected Layout */}
         <Route
-          path="/problems/add"
           element={
-            <AdminRoute>
+            <ProtectedRoute>
               <Layout />
-              <AddProblem />
-            </AdminRoute>
+            </ProtectedRoute>
           }
-        />
+        >
+          <Route
+            path="/problems/add"
+            element={
+              <AdminRoute>
+                <AddProblem />
+              </AdminRoute>
+            }
+          />
+        </Route>
       </Routes>
     </Router>
   );

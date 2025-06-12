@@ -1,3 +1,4 @@
+// src/components/ProblemsList.jsx
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API from '../api';
@@ -63,23 +64,30 @@ export default function ProblemsList() {
                 <h3 className="text-lg font-semibold">{problem.title}</h3>
                 <p>{problem.description.substring(0, 100)}...</p>
               </div>
-              {user?.isAdmin && (
-                <div className="space-x-2">
-                  <button
-                    onClick={() => navigate(`/edit-problem/${problem._id}`)}
-
-                    className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(problem._id)}
-                    className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-                  >
-                    Delete
-                  </button>
-                </div>
-              )}
+              <div className="space-x-2 flex items-center">
+                <button
+                  onClick={() => navigate(`/solve/${problem._id}`)}
+                  className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700"
+                >
+                  Solve
+                </button>
+                {user?.isAdmin && (
+                  <>
+                    <button
+                      onClick={() => navigate(`/edit-problem/${problem._id}`)}
+                      className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(problem._id)}
+                      className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+                    >
+                      Delete
+                    </button>
+                  </>
+                )}
+              </div>
             </li>
           ))}
         </ul>

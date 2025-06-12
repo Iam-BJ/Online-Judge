@@ -13,6 +13,8 @@ export default function Navbar() {
             <>
               <Link to="/problems" className="hover:underline">Problems</Link>
               <Link to="/dashboard" className="hover:underline">Profile</Link>
+              <Link to="/submissions" className="hover:text-blue-500">My Submissions</Link>
+
             </>
           )}
         </div>
